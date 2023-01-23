@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class EnemyInstantiate : MonoBehaviour
 {
-    [SerializeField] private Thief _thief;
-    [SerializeField] private int _thiefCount;
+    [SerializeField] private Thief _template;
+    [SerializeField] private int _enemyCount;
     [SerializeField] private float _spawnTime;
 
     private SpawningPoint[] _spawningPoints = new SpawningPoint[1];
@@ -25,10 +25,10 @@ public class EnemyInstantiate : MonoBehaviour
         {
             yield return new WaitForSeconds(_spawnTime);
 
-            Thief newThief = Instantiate(_thief, _spawningPoints[_tempCount % _spawningPoints.Length].transform.position, Quaternion.identity);
+            Thief newThief = Instantiate(_template, _spawningPoints[_tempCount % _spawningPoints.Length].transform.position, Quaternion.identity);
             _tempCount++;
 
-            if (_tempCount == _thiefCount)
+            if (_tempCount == _enemyCount)
             {
                 StopCoroutine(_spawnJob);
             }

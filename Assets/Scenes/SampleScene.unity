@@ -320,8 +320,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 875df3f0e92fe974e9c36ee75345e551, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _thief: {fileID: 3849085670396822051, guid: 25a705d819ee3c34d9d5ff8adec09c25, type: 3}
-  _thiefCount: 14
+  _template: {fileID: 3849085670396822051, guid: 25a705d819ee3c34d9d5ff8adec09c25, type: 3}
+  _enemyCount: 14
   _spawnTime: 2
 --- !u!4 &344514246
 Transform:
