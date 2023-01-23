@@ -9,39 +9,39 @@ public class EnemyInstantiate : MonoBehaviour
     [SerializeField] private int _enemyCount;
     [SerializeField] private float _spawnTime;
 
-    private Spawn[] _spawns = new Spawn[1];
-    private Coroutine _spawningJob;
+    private SpawningPoint[] _spawningPoints = new SpawningPoint[1];
+    private Coroutine _spawnJob;
     private int _tempCount = 0;
     private float _deltaTime = 0;
 
     private void Start()
     {
-        _spawns = GetComponentsInChildren<Spawn>();
-        _spawningJob = StartCoroutine(Spawning());
+        _spawningPoints = GetComponentsInChildren<SpawningPoint>();
+        _spawnJob = StartCoroutine(Spawn());
     }
 
     private void Update()
     {
-        if (_spawningJob != null)
+        if (_spawnJob != null)
         {
             _deltaTime += Time.deltaTime;
         }
     }
 
-    private IEnumerator Spawning()
+    private IEnumerator Spawn()
     {       
         while (_tempCount < _enemyCount)
         {
             if (_deltaTime >= _spawnTime)
             {
                 _deltaTime = 0;
-                GameObject newObject = Instantiate(_enemy, _spawns[_tempCount % _spawns.Length].transform.position, Quaternion.identity);
+                GameObject newObject = Instantiate(_enemy, _spawningPoints[_tempCount % _spawningPoints.Length].transform.position, Quaternion.identity);
                 _tempCount++;
             }
 
             if (_tempCount == _enemyCount)
             {
-                StopCoroutine(_spawningJob);
+                StopCoroutine(_spawnJob);
             }
 
             yield return null;
