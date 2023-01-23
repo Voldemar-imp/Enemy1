@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class EnemyInstantiate : MonoBehaviour
 {
-    [SerializeField] private GameObject _enemy;
-    [SerializeField] private int _enemyCount;
+    [SerializeField] private Thief _thief;
+    [SerializeField] private int _thiefCount;
     [SerializeField] private float _spawnTime;
 
     private SpawningPoint[] _spawningPoints = new SpawningPoint[1];
     private Coroutine _spawnJob;
     private int _tempCount = 0;
-    private float _deltaTime = 0;
 
     private void Start()
     {
@@ -20,31 +19,19 @@ public class EnemyInstantiate : MonoBehaviour
         _spawnJob = StartCoroutine(Spawn());
     }
 
-    private void Update()
-    {
-        if (_spawnJob != null)
-        {
-            _deltaTime += Time.deltaTime;
-        }
-    }
-
     private IEnumerator Spawn()
-    {       
-        while (_tempCount < _enemyCount)
+    {
+        while (true)
         {
-            if (_deltaTime >= _spawnTime)
-            {
-                _deltaTime = 0;
-                GameObject newObject = Instantiate(_enemy, _spawningPoints[_tempCount % _spawningPoints.Length].transform.position, Quaternion.identity);
-                _tempCount++;
-            }
+            yield return new WaitForSeconds(_spawnTime);
 
-            if (_tempCount == _enemyCount)
+            Thief newThief = Instantiate(_thief, _spawningPoints[_tempCount % _spawningPoints.Length].transform.position, Quaternion.identity);
+            _tempCount++;
+
+            if (_tempCount == _thiefCount)
             {
                 StopCoroutine(_spawnJob);
             }
-
-            yield return null;
         }
     }
 }
